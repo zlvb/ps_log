@@ -10,6 +10,7 @@ int G_PU_LOG_DEBUG_ISOPEN = 1;
 int G_PU_LOG_MESSAGE_ISOPEN = 1;
 int G_PU_LOG_WARNING_ISOPEN = 1;
 int G_PU_LOG_ERROR_ISOPEN = 1;
+LOG_HANDLE *g_MainpLog; // 日志
 ShowlogFunc gs_default_sh_func = PsDefaultShowLogText;
 #ifdef _MSC_VER
 #pragma warning(disable:4127 4100)
@@ -116,6 +117,7 @@ LOG_HANDLE* PsLogOpen(const char* prefix)
     }
 	else
     {
+        const char bad_char[] = "/\\:*?\"<>|"; // 不能用于文件名的字符
         int prefix_len = (int)strlen(prefix);
         int i = 0; 
         memset(hHandle->g_fname_prefix, 0, sizeof(hHandle->g_fname_prefix));
